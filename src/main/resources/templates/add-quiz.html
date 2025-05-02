@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>퀴즈 등록 폼</h2>
+    </div>
+    <h4 class="mb-3">퀴즈 입력</h4>
+
+    <form th:action="@{/quiz}" method="post">
+            <div class="form-group">
+                <label >파일 업로드</label>
+                <input type="file" id="fileOriginalName" th:name="fileOriginalName" >
+                <button type="button" class="btn btn-primary" id="btn-save">저장</button>
+            </div>
+            <div class="col-md-10">
+                <p><strong>결과 이미지입니다.</strong></p>
+                <img src="" id="fileName" th:id="fileName" th:name="fileName">
+            </div>
+        <div>
+            <label for="title">퀴즈 제목</label>
+            <input type="text" id="title" th:name="title" class="form-control" placeholder="퀴즈 제목을 입력하세요">
+        </div>
+        <div>
+            <label for="example1">보기1</label>
+            <input type="text" id="example1" th:name="example1" class="form-control"
+                   placeholder="보기를 입력하세요">
+        </div>
+        <div>
+            <label for="example2">보기2</label>
+            <input type="text" id="example2" th:name="example2" class="form-control"
+                   placeholder="보기를 입력하세요">
+        </div>
+        <div>
+        <label for="example3">보기3</label>
+        <input type="text" id="example3" th:name="example3" class="form-control"
+               placeholder="보기를 입력하세요">
+        </div>
+        <div>
+        <label for="example4">보기4</label>
+        <input type="text" id="example4" th:name="example4" class="form-control"
+               placeholder="보기를 입력하세요">
+        </div>
+        <div>
+            <label for="answer">정답</label>
+            <input type="text" id="answer" th:name="answer" class="form-control"
+                   placeholder="정답을 입력하세요">
+        </div>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">퀴즈 등록</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='/'"
+                        type="button">취소</button>
+            </div>
+        </div>
+    </form>
+</div> <!-- /container -->
+<script>
+    $('#btn-save').on('click', uploadImage);
+    function uploadImage() {
+        var file = $('#fileOriginalName')[0].files[0]
+        var formData = new FormData();
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        formData.append('data', file);
+        $.ajax({
+            type: 'POST',
+            url: '/quiz/image-upload',
+            data: formData,
+            processData: false,
+            contentType: false,
+            async: true,
+            beforeSend : function(xhr){
+            xhr.setRequestHeader(header, token);
+        },
+        }).done(function (data) {
+            $('#fileName').attr("src", data);
+        }).fail(function (error) {
+            alert(error);
+             }) }
+</script>
+</body>
+</html>

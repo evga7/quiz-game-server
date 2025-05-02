@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    .container {
+      max-width: 560px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="py-5 text-center">
+    <h2>퀴즈 상세</h2>
+  </div>
+  <h2 th:if="${param.posted}" th:text="'퀴즈 정상적으로 수정 완료!'"></h2>
+  <div>
+    <label for="title">이미지</label>
+    <br>
+    <img th:src="${path}" id="path" name="path" th:width="200">
+  </div>
+  <div>
+    <label for="id">ID</label>
+    <input type="text" id="id" name="id" class="form-control"
+           th:value="${quiz.id}" readonly>
+  </div>
+  <div>
+    <label for="title">퀴즈 제목</label>
+    <input type="text" id="title" name="title" class="form-control"
+           th:value="${quiz.title}" readonly>
+  </div>
+  <div>
+    <label for="example1">보기 1</label>
+    <input type="text" id="example1" name="example1" class="form-control"
+           th:value="${quiz.example1}" readonly>
+  </div>
+  <div>
+    <label for="example2">보기 2</label>
+    <input type="text" id="example2" name="example2" class="form-control"
+           th:value="${quiz.example2}" readonly>
+  </div>
+  <div>
+    <label for="example3">보기 3</label>
+    <input type="text" id="example3" name="example3" class="form-control"
+           th:value="${quiz.example3}" readonly>
+  </div>
+  <div>
+    <label for="example4">보기 4</label>
+    <input type="text" id="example4" name="example4" class="form-control"
+           th:value="${quiz.example4}" readonly>
+  </div>
+  <div>
+    <label for="answer">정답</label>
+    <input type="text" id="answer" name="answer" class="form-control"
+           th:value="${quiz.answer}" readonly>
+  </div>
+  <hr class="my-4">
+  <div class="row">
+    <div class="col">
+      <button class="w-100 btn btn-primary btn-lg"
+              onclick="location.href='editQuiz.html'"
+              th:onclick="|location.href='@{/quiz/edit/{itemId}(itemId=${quiz.id})}'|" type="button">퀴즈 수정</button>
+    </div>
+    <div class="col">
+      <button class="w-100 btn btn-secondary btn-lg"
+              onclick="location.href='main.html'"
+              th:onclick="|location.href='@{/}'|"
+              type="button">목록으로</button>
+    </div>
+  </div>
+</div> <!-- /container -->
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymelaef.org">
+<head>
+  <meta charset="utf-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    #logout{
+      margin-left:20px;
+    }
+  </style>
+</head>
+<body>
+<div class="container" style="max-width: 1500px">
+  <div class="py-4 text-center">
+    <h2>퀴즈 목록</h2>
+  </div>
+  <div class="row">
+    <h2 th:if="${param.posted}" th:text="'퀴즈 정상적으로 등록 완료!'"></h2>
+    <h2 th:if="${param.changed}" th:text="'퀴즈 정상적으로 수정 완료!'"></h2>
+    <h2 th:if="${param.deleted}" th:text="'퀴즈 정상적으로 삭제 완료!'"></h2>
+  </div>
+
+    <form>
+        <button class="btn btn-danger"
+                formmethod="post"
+                formaction="/logout"
+                th:name="${_csrf.parameterName}" th:value="${_csrf.token}"
+                id="logout"
+                type="submit">로그 아웃</button>
+
+    </form>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-primary"
+              onclick="location.href='user-boards?nickName=운영자'"
+              type="button" >게시판 보기</button>
+      &nbsp&nbsp
+      <button class="btn btn-primary"
+              onclick="location.href='user-messages'"
+              type="button" >의견 보기</button>
+      &nbsp&nbsp
+      <button class="btn btn-primary"
+              onclick="location.href='user-reports'"
+              type="button" >신고 보기</button>
+    </div>
+
+
+  <br>
+
+  <form class="row g-3 d-flex justify-content-end" method="get" th:action="@{/}">
+    <div class="col-auto">
+      <label for="searchText" class="visually-hidden"></label>
+      <input type="text" class="form-control" id="searchText" name="searchText" th:value="${param.searchText}">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary mb-3">검색</button>
+    </div>
+  </form>
+  <div>
+    <table class="table" style="font-size: 9pt">
+      <thead>
+      <tr>
+        <th>문제 번호</th>
+        <th>문제 제목</th>
+        <th>보기1</th>
+        <th>보기2</th>
+        <th>보기3</th>
+        <th>보기4</th>
+        <th>정답</th>
+        <th>삭제</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="quiz : ${quizs}">
+        <td><a href="quiz.html" th:href="@{|quiz/${quiz.id}|}" th:text="${quiz.id}">퀴즈 번호</a></td>
+        <td><a href="quiz.html" th:href="@{|quiz/${quiz.id}|}" th:text="${quiz.title}">퀴즈 제목</a></td>
+        <td th:text="${quiz.example1}"></td>
+        <td th:text="${quiz.example2}"></td>
+        <td th:text="${quiz.example3}"></td>
+        <td th:text="${quiz.example4}"></td>
+        <td th:text="${quiz.answer}"></td>
+        <td>
+          <form id="deleteQuiz" th:action="@{'quiz/'+${quiz.id}}" method="post">
+            <input type="hidden" name="_method" value="delete"/>
+            <button id="delete-btn" class="btn btn-outline-danger">삭제</button>
+          </form>
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${1 == currentPageNumber} ? 'disabled'"
+          th:class="${totalPages}<1 ? 'page-item disabled' : 'page-item'">
+        <a class="page-link" th:href="@{/(page=${currentPageNumber-2},searchText=${param.searchText})}"
+           tabindex="-1" aria-disabled="true">Previous</a>
+      </li>
+      <li class="page-item" th:classappend="${i == currentPageNumber} ? 'disabled'"
+          th:if="${totalPages}>=1"
+          th:each="i : ${#numbers.sequence(currentPageNumber-7<1?1:currentPageNumber-7, currentPageNumber+7>totalPages?totalPages:currentPageNumber+7)}">
+        <a class="page-link" th:href="@{/(page=${i-1},searchText=${param.searchText})}" th:text="${i}"></a>
+      </li>
+      <li class="page-item" th:classappend="${totalPages == currentPageNumber} ? 'disabled'"
+          th:class="${totalPages}<1 ? 'page-item disabled' : 'page-item'">
+        <a class="page-link" th:href="@{/(page=${currentPageNumber},searchText=${param.searchText})}">Next</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-primary "
+            onclick="location.href='add-quiz'"
+            type="button" >퀴즈 등록</button>
+  </div>
+</div> <!-- /container -->
+</body>
+</html>
