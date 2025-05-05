@@ -34,29 +34,33 @@
 |:----|:----|
 | 백엔드 | Java 21, Spring Boot |
 | 데이터베이스 | MySQL, Redis |
-| 메시지 | RabbitMQ |
-| 배포 | Docker, Nginx |
-| 테스트 | JMeter (부하 테스트) |
+| 메시지 큐 | RabbitMQ |
 | 클라우드 | AWS EC2, S3 |
+| 배포 | Docker, Nginx |
+| 테스트 도구 | JMeter (부하 테스트) |
+| 템플릿 엔진 | Thymeleaf |
+| 프론트엔드 | HTML5, Bootstrap 5, JQuery |
+
 
 ---
 
-## 🗂️ 폴더 구조
-├── config # 보안, MVC 설정 등 스프링 설정 파일
-├── controller # HTTP 요청을 처리하는 API 엔드포인트
-├── domain # JPA 엔티티 (DB 테이블 매핑)
-├── dto # 요청/응답 데이터 전송 객체 (DTO)
-├── infra
-│ ├── rabbitmq # RabbitMQ 설정 및 프로듀서/컨슈머
-│ ├── redis # Redis 설정 및 캐시 동기화
-│ ├── s3 # AWS S3 업로드 기능
-├── repository # 데이터베이스 접근 레이어 (JPA Repository)
-├── service # 핵심 비즈니스 로직 처리
-├── validate # 커스텀 유효성 검사 로직
-├── QuizGameApplication.java # 스프링 부트 메인 실행 파일
-└── resources
-├── static # 정적 리소스 (CSS, JS 등)
-└── templates # Thymeleaf HTML 템플릿
+## 📁 폴더 구조
+
+├── config # 보안, MVC 설정 등 스프링 설정 파일  
+├── controller # HTTP 요청을 처리하는 API 엔드포인트  
+├── domain # JPA 엔티티 (DB 테이블 매핑)  
+├── dto # 요청/응답 데이터 전송 객체 (DTO)  
+├── infra  
+│   ├── rabbitmq # RabbitMQ 설정 및 프로듀서/컨슈머  
+│   ├── redis # Redis 설정 및 캐시 동기화  
+│   └── s3 # AWS S3 업로드 기능  
+├── repository # 데이터베이스 접근 레이어 (JPA Repository)  
+├── service # 핵심 비즈니스 로직 처리  
+├── validate # 커스텀 유효성 검사 로직  
+├── QuizGameApplication.java # 스프링 부트 메인 실행 파일  
+└── resources  
+    ├── static # 정적 리소스 (CSS, JS 등)  
+    └── templates # Thymeleaf HTML 템플릿  
 
 
 ---
