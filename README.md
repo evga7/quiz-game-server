@@ -42,6 +42,7 @@
 | 테스트 도구 | JMeter (부하 테스트) |
 | 템플릿 엔진 | Thymeleaf |
 | 프론트엔드 | HTML5, Bootstrap 5, JQuery |
+| 모바일 앱 | Kotlin (Android) |
 
 
 ---
