@@ -11,6 +11,7 @@ import pyo.quizgame.domain.FrontUserInfo;
 import pyo.quizgame.domain.UserRankInfo;
 import pyo.quizgame.repository.RankRepository;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -67,6 +68,7 @@ public class RankService {
         }
 
         saveAll(userRankInfos);
+        redisTemplate.expire(REDIS_RANK_KEY, Duration.ofMinutes(15));
     }
 
     @Transactional(readOnly = true)

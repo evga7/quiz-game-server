@@ -2,6 +2,7 @@ package pyo.quizgame.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,6 +76,7 @@ public class FrontUserController {
     }
 
     @Operation(summary = "10분마다 랭킹 갱신")
+    @Scheduled(cron = "0 */10 * * * *")
     @GetMapping("/quiz/update-user-rank")
     @ResponseBody
     public String updateUserRank() {
