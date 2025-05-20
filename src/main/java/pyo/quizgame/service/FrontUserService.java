@@ -45,6 +45,17 @@ public class FrontUserService {
         updatePercentage(frontUserInfo.getNickName());
         return true;
     }
+    @Transactional
+    public void updateUserAsync(QuizResultMessage msg) {
+        frontUserRepository.incrementQuizCount(
+                msg.getNickName(),
+                msg.getTotalQuizCount(),
+                msg.getSolvedQuizCount()
+        );
+        updatePercentage(msg.getNickName());
+
+    }
+
 
     @Transactional
     public void updatePercentage(String nickName) {
@@ -93,21 +104,8 @@ public class FrontUserService {
         return "OK";
     }
 
-    @Transactional
-    public void applyQuizResult(QuizResultMessage msg) {
-        frontUserRepository.incrementQuizCount(
-                msg.getNickName(),
-                msg.getTotalQuizCount(),
-                msg.getSolvedQuizCount()
-        );
 
-        UserStats stats = frontUserRepository.fetchStats(msg.getNickName());
 
-        frontUserRepository.updatePercentage(
-                msg.getNickName(),
-                String.format("%.2f", stats.getSolvedQuizCount() * 100.0 / stats.getTotalQuizCount())
-        );
-    }
 
 
     @Transactional(readOnly = true)
